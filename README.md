@@ -3,13 +3,13 @@
 Baidu translate for free -- local cache plus throttling. Hope it lasts.
 
 ### Installing
-* Install (pip or whatever) necessary requirements (e.g. ```pip install js2py requests_cache jsonpath_rw```）
+* Install (pip or whatever) necessary requirements (e.g. ```pip install js2py requests_cache jsonpath_rw`` or pip -r requirements.txt`）
 * Drop the file bdtr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
 * Several valid TOKEN/BAIDUID are included.
 
 ### Usage:
 
-```from bdtr import bdtr
+``` from bdtr import bdtr
 print(bdtr('hello world') # -> '你好，世界'
 print(bdtr('hello world', to_lang='de')  # ->'Hallo Welt'
 print(bdtr('hello world', to_lang='jp')  # 'ハローワールド'
