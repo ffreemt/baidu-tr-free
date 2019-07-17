@@ -3,7 +3,9 @@
 Baidu translate for free -- local cache plus throttling. Hope it lasts.
 
 ### Installing
-* Install (pip or whatever) necessary requirements (e.g. ```pip install js2py requests_cache jsonpath_rw`` or pip -r requirements.txt`）
+* Install (pip or whatever) necessary requirements, e.g. ``` 
+pip install js2py requests_cache jsonpath_rw``` or ```
+pip -r requirements.txt```
 * Drop the file bdtr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
   * Several valid TOKEN/BAIDUID are included.
 * or clone the repo and change to baidu-tr-free and to a ```
