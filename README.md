@@ -8,8 +8,7 @@ pip install js2py requests_cache jsonpath_rw``` or ```
 pip -r requirements.txt```
 * Drop the file bdtr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
   * Several valid TOKEN/BAIDUID are included.
-* or clone the repo and change to baidu-tr-free and do a 
-```
+* or clone the repo and change to the baidu-tr-free folder and do a ```
 python setup.py develop```
 
 ### Usage:
