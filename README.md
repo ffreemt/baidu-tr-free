@@ -11,7 +11,7 @@ pip -r requirements.txt```
 * or clone the repo and change to the baidu-tr-free folder and do a ```
 python setup.py develop```
 
-### Usage:
+### Usage
 
 ```
 from bdtr import bdtr
