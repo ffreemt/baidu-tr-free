@@ -1,6 +1,9 @@
 '''fetch baidu fanyi token baiduid
 by chromedriver
 
+Used to generate data in token-id.json
+
+currently not used by bdtr -- for future use
 '''
 import logging
 import re
