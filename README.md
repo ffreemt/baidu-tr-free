@@ -17,8 +17,7 @@ python setup.py develop```
 from bdtr import bdtr
 print(bdtr('hello world'))  # -> '你好，世界'
 print(bdtr('hello world', to_lang='de'))  # ->'Hallo Welt'
-print(bdtr('hello world', to_lang='jp'))  # -> 'ハローワールド'
-```
+print(bdtr('hello world', to_lang='jp'))  # ->'ハローワールド'```
 
 ### Validation and Pressure Tests
 * pip install pytest
@@ -27,5 +26,5 @@ print(bdtr('hello world', to_lang='jp'))  # -> 'ハローワールド'
 
 ### Acknowledgments
 
-* Thanks to all whose code was used
-* JS_SIGN can be found on the net. It's also not too difficult to obtain similar code from devtools.
+* Thanks to everyone whose code was used
+* JS_SIGN (javascript code for signing) can be found on the net. It's also not too difficult to obtain some similar code from Chrome's devtools.
