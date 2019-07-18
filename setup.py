@@ -23,5 +23,14 @@ setup(
     version=version,
     description=description,
     long_description=long_description,
+    keywords="'machine translation' free scraping",
     author="mikeee",
+    url='http://github.com/ffreemt/baidu-tr-free',
+    classifiers=[
+        'Intended Audience :: Users',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.5',
+        'License :: OSI Approved :: MIT License',
+    ],
+    license='MIT License',
 )
