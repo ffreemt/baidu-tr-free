@@ -154,7 +154,7 @@ SESS = requests_cache.CachedSession(
     expire_after=EXPIRE_AFTER,
     allowable_methods=('GET', 'POST'),
 )
-SESS.hooks = {'response': make_throttle_hook()}
+SESS.hooks = {'response': make_throttle_hook(1, 200)}  # to play safe, default: 0.67, 1000
 SESS.get(URL, headers=HEADERS)
 
 # for js_sign below
