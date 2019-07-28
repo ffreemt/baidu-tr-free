@@ -4,7 +4,7 @@ Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 
 ### Installation
 * ```pip install baidu-tr-free -U```
-* Install (pip or whatever) necessary requirements, e.g. ```
+* or install (pip or whatever) necessary requirements, e.g. ```
 pip install js2py requests_cache jsonpath_rw``` or ```
 pip install -r requirements.txt```
 * Drop the file bdtr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
