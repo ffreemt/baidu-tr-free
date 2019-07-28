@@ -105,6 +105,48 @@ HEADERS = {
 
 # JSC = execjs.compile(JS).call
 
+
+def make_throttle_hook(timeout=0.67, exempt=1000):
+    """
+    Returns a response hook function which sleeps for `timeout` seconds if
+    response is not cached
+
+    the first exempt calls exempted from throttling
+    """
+
+    try:
+        timeout = float(timeout)
+    except Exception as _:
+        timeout = .67
+
+    try:
+        exempt = int(exempt)
+    except Exception as _:
+        exempt = 100
+
+    def hook(response, *args, **kwargs):  # pylint: disable=unused-argument
+        if not getattr(response, 'from_cache', False):
+            timeout_ = timeout + random() - 0.5
+            timeout_ = max(0, timeout_)
+
+            try:
+                hook.flag
+            except AttributeError:
+                hook.flag = -1
+            finally:
+                hook.flag += 1
+                quo, _ = divmod(hook.flag, exempt)
+            # quo is 0 only for the first exempt calls
+
+            LOGGER.debug('avg delay: %s, sleeping %s s, flag: %s', timeout, timeout_, bool(quo))
+
+            # will not sleep (timeout_ * bool(quo)=0) for the first exempt calls
+            sleep(timeout_ * bool(quo))
+
+        return response
+    return hook
+
+
 URL = "https://fanyi.baidu.com/translate"
 # SESS = requests.Session()
 SESS = requests_cache.CachedSession(
@@ -112,6 +154,7 @@ SESS = requests_cache.CachedSession(
     expire_after=EXPIRE_AFTER,
     allowable_methods=('GET', 'POST'),
 )
+SESS.hooks = {'response': make_throttle_hook()}
 SESS.get(URL, headers=HEADERS)
 
 # for js_sign below
@@ -129,32 +172,6 @@ def js_sign(text, gtk='320305.131321201'):
 def jp_match(path, obj):
     '''emulate jsonpath_rw_ext\'s jp.match'''
     return [elm.value for elm in parse(path).find(obj)]
-
-
-def make_throttle_hook(timeout=1.0):
-    """
-    Returns a response hook function which sleeps for `timeout` seconds if
-    response is not cached
-
-    time.sleep(min(0, timeout - 0.5) + random())
-        average delay: timeout
-
-    s = requests_cache.CachedSession()
-    s.hooks = {'response': make_throttle_hook(0.1)}
-    s.get('http://httpbin.org/delay/get')
-    s.get('http://httpbin.org/delay/get')
-    """
-    def hook(response, *args, **kwargs): # pylint: disable=unused-argument
-        if not getattr(response, 'from_cache', False):
-            timeout0 = min(0, timeout - 0.5) + random()
-            LOGGER.debug('%s', f'sleeping {timeout0} s')
-            sleep(timeout0)
-        return response
-    return hook
-
-
-# av .6 s  for noncached requests
-SESS.hooks = {'response': make_throttle_hook(0.6)}
 
 
 def swap(token, bdid, func='bdtr'):
@@ -285,14 +302,14 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True): # pylint: disable=to
     return ''
 
 
-def test1():
+def test_def():
     ''' test1 '''
     text = '为乐为魂之语与通〜'
     from_lang = 'wyw'
     to_lang = 'en'
     assert bdtr(text, from_lang, to_lang) == 'Language and Communication for Music Is the Soul'  # NOQA
 
-def pressure_test():
+def test_pressure():
     '''pressure_test'''
     from time import perf_counter
     from tqdm import trange

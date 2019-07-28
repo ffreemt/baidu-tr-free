@@ -12,8 +12,7 @@ name = """baidu-tr-free"""
 description = name.replace('-tr-', 'translate for')
 dir_name, = find_packages()
 
-version, = re.findall(r"__version__\W*=\W*'([^']+)'", open(Path(__file__).parent / f'{dir_name}/__init__.py').read())
-
+version, = re.findall(r"\n__version__\W*=\W*'([^']+)'", open(Path(__file__).parent / f'{dir_name}/__init__.py').read())
 
 README_rst = f'{Path(__file__).parent}/README.md'
 long_description = open(README_rst, encoding='utf-8').read() if Path(README_rst).exists() else ''
@@ -24,13 +23,22 @@ setup(
     version=version,
     description=description,
     long_description=long_description,
-    keywords="'machine translation' free scraping",
+    long_description_content_type='text/markdown',
+    keywords=['machine translation', 'free', 'scraping', ],
     author="mikeee",
-    url='http://github.com/ffreemt/baidu-tr-free',
+    url=f'http://github.com/ffreemt/{name}',
+    download_url='https://github.com/ffreemt/google-tr-free/archive/v_001.tar.gz',
+    install_requires=[
+        'requests_cache',
+        'js2py',
+        'jsonpath_rw',
+    ],
     classifiers=[
-        'Intended Audience :: Users',
-        'Programming Language :: Python',
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'License :: OSI Approved :: MIT License',
     ],
     license='MIT License',
