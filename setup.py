@@ -27,7 +27,7 @@ setup(
     keywords=['machine translation', 'free', 'scraping', ],
     author="mikeee",
     url=f'http://github.com/ffreemt/{name}',
-    download_url='https://github.com/ffreemt/google-tr-free/archive/v_001.tar.gz',
+    download_url=f'https://github.com/ffreemt/{name}/archive/v_{versioin}.tar.gz',
     install_requires=[
         'requests_cache',
         'js2py',

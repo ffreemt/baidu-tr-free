@@ -3,7 +3,7 @@
 Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 
 ### Installation
-```pip install baidu-tr-free -U```
+```pip install -U baidu-tr-free```
 or
 * install (pip or whatever) necessary requirements, e.g. ```
 pip install js2py requests_cache jsonpath_rw``` or ```
