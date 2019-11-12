@@ -265,7 +265,8 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True): # pylint: disable=to
         to_lang = 'en'
 
     # 'auto' no longer works
-    # temp fix TODO: better logic to fix auto
+    # temp fix
+    # TODO: better logic to fix auto based on to_lang
     if from_lang in ['auto']:
         from_lang = 'en'
 
