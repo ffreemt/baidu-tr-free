@@ -51,9 +51,14 @@ TOKEN, BAIDUID = ('9b8bb341109338ba7e875bd9a9dd88ba', '85885D7321AF93211B8F0214B
 
 # TOKEN, BAIDUID = ('b88bd1203769d778996525664a93af85', 'E56024F05E3017023A50047936591306:FG=1')
 # TOKEN, BAIDUID = ('e66e5676d52ce2caa402c996ebd4bcb6', 'A6347D4D2C9E32E287A9D456B36B714C:FG=1')
-TOKEN, BAIDUID = ('dd7f161198b5c8da969d4175f025d3fa', '7568DBBE0B2C2AFAA4E35DB432B424B0:FG=1')  # OK
+# TOKEN, BAIDUID = ('dd7f161198b5c8da969d4175f025d3fa', '7568DBBE0B2C2AFAA4E35DB432B424B0:FG=1')  # OK
 
-TOKEN, BAIDUID = ('df9b627b81f5d6c41f10be655bdf3887', '85885D7321AF93211B8F0214B9B1F91E:FG=1')  # OK
+# TOKEN, BAIDUID = ('df9b627b81f5d6c41f10be655bdf3887', '85885D7321AF93211B8F0214B9B1F91E:FG=1')  # xOK
+
+# devtools, copy curl(bash)-> requets https://curl.trillworks.com/  OK 2019.11.12
+# pypi-ready\baidu_tr\bdtr\curl2req20191112.py
+TOKEN = 'e9ff6a550307ca17c1bc461c07edeaaf'
+BAIDUID = '4EAE417BC9660D50D9A867BC9D7BC0F1:FG=1'
 
 # ###########################
 GTK = '320305.131321201'
@@ -258,6 +263,11 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True): # pylint: disable=to
         from_lang = 'en'
     if to_lang in ['english']:
         to_lang = 'en'
+
+    # 'auto' no longer works
+    # temp fix TODO: better logic to fix auto
+    if from_lang in ['auto']:
+        from_lang = 'en'
 
     data = {
         'from': from_lang,
