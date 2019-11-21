@@ -17,6 +17,8 @@ from random import random, randint
 from pathlib import Path
 
 import requests_cache
+from .py_sign import py_sign
+
 import js2py
 from jsonpath_rw import parse
 
@@ -166,7 +168,7 @@ SESS.get(URL, headers=HEADERS)
 exec(js2py.translate_js(JS))  # pylint: disable=exec-used
 
 
-def js_sign(text, gtk='320305.131321201'):
+def _js_sign(text, gtk='320305.131321201'):
     '''gtk, does not play  role
 
     >>> assert js_sign('test') == '431039.159886'
@@ -212,7 +214,7 @@ def swap(token, bdid, func='bdtr'):
         bdtr_.sess.get(URL, headers=bdtr_.headers)
 
 
-def bdtr(text, from_lang='auto', to_lang='zh', cache=True): # pylint: disable=too-many-branches, too-many-statements
+def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=too-many-branches, too-many-statements
     ''' baidu translate based on html token and gtk
 
     from_lang='auto'; to_lang='zh'; cache=False
@@ -276,14 +278,17 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True): # pylint: disable=to
         'query': text,
         'transtype': 'translang',
         'simple_means_flag': '3',
-        'sign': js_sign(text, GTK),
-        'token': bdtr.token,
+        'sign': py_sign(text, GTK),
+        # 'sign': js_sign(text, GTK),
+        # 'token': bdtr.token,
+        'token': TOKEN,
     }
 
     def fetch():
         '''fetch for two cache cases'''
         try:
-            resp = bdtr.sess.post(url, data=data, headers=bdtr.headers)  # OK
+            # resp = bdtr.sess.post(url, data=data, headers=bdtr.headers)  # OK
+            resp = SESS.post(url, data=data, headers=HEADERS)  # OK
             resp.raise_for_status()
             bdtr.text = resp.text
         except Exception as exc:
@@ -318,13 +323,14 @@ def test_def():
     text = '为乐为魂之语与通〜'
     from_lang = 'wyw'
     to_lang = 'en'
-    assert bdtr(text, from_lang, to_lang) == 'Language and Communication for Music Is the Soul'  # NOQA
+    assert bdtr(text, from_lang, to_lang) == 'For music is the language and communication of soul ~'  # NOQA
+
 
 def test_pressure():
     '''pressure_test'''
     from time import perf_counter
     from tqdm import trange
-    for _ in trange(100):
+    for _ in trange(10):
         tick = perf_counter()
         res = bdtr('test ' + str(randint(1, maxsize)))
         print(res, f'time: {(perf_counter() - tick):.2f} s')
