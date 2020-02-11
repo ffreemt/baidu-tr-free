@@ -2,7 +2,7 @@
 
 Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 ### Fixed
-Text longer thatn 30 characters can be handled now.
+Text longer than 30 characters can be handled now.
 
 ### Installation
 ```pip install -U baidu-tr-free```
