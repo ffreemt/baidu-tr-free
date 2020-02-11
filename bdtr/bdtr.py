@@ -1,4 +1,6 @@
 r'''
+2020 02 10: only works if len(text) < 31?
+
 baidu translate using token/gtk from https://fanyi.baidu.com
 
 TOKEN 和 BAIDUID 从chrome devtools 里拿（Network， 定位 v2transapi，从 headers 拷出 TOKEN 和 BAIDUID）， 实测可行……
@@ -17,10 +19,12 @@ from random import random, randint
 from pathlib import Path
 
 import requests_cache
-from .py_sign import py_sign
 
 import js2py
 from jsonpath_rw import parse
+
+from .py_sign import py_sign
+from .js2py_sign import js2py_sign
 
 TOKEN = '564da85ec9a69e4f469df84fee8027a7'
 BAIDUID = '2462075953DF51DB4F847392B678BBCA:FG=1'
@@ -171,7 +175,7 @@ exec(js2py.translate_js(JS))  # pylint: disable=exec-used
 def _js_sign(text, gtk='320305.131321201'):
     '''gtk, does not play  role
 
-    >>> assert js_sign('test') == '431039.159886'
+    >>> assert _js_sign('test') == '431039.159886'
     '''
     return PyJs_anonymous_1_(text, gtk).to_py()  # pylint: disable=undefined-variable
 
@@ -272,13 +276,18 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
     if from_lang in ['auto']:
         from_lang = 'en'
 
+    if len(text) < 31:
+        sign = py_sign(text, GTK)
+    else:
+        sign = js2py_sign(text)
+
     data = {
         'from': from_lang,
         'to': to_lang,
         'query': text,
         'transtype': 'translang',
         'simple_means_flag': '3',
-        'sign': py_sign(text, GTK),
+        'sign': sign,
         # 'sign': js_sign(text, GTK),
         # 'token': bdtr.token,
         'token': TOKEN,
@@ -293,7 +302,7 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
             bdtr.text = resp.text
         except Exception as exc:
             LOGGER.error('%s', exc)
-            bdtr.text = str(exc)
+            bdtr.text = {'errors': str(exc)}
             resp = bdtr.text
         return resp
 
@@ -316,25 +325,6 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
     if resu:
         return resu[0]
     return ''
-
-
-def test_def():
-    ''' test1 '''
-    text = '为乐为魂之语与通〜'
-    from_lang = 'wyw'
-    to_lang = 'en'
-    assert bdtr(text, from_lang, to_lang) == 'For music is the language and communication of soul ~'  # NOQA
-
-
-def test_pressure():
-    '''pressure_test'''
-    from time import perf_counter
-    from tqdm import trange
-    for _ in trange(10):
-        tick = perf_counter()
-        res = bdtr('test ' + str(randint(1, maxsize)))
-        print(res, f'time: {(perf_counter() - tick):.2f} s')
-        assert res, 'probably need to increase the value in SESS.hooks = {\'response\': make_throttle_hook(0.6)}'
 
 
 def main():
