@@ -1,4 +1,4 @@
-name: Python3.6|3.7 package
+name: Python3.6 package
 
 on: [push]
 
