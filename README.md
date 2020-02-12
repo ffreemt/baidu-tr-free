@@ -1,4 +1,4 @@
-# baidu-tr-free https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6|3.7%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/baidu-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/baidu-tr-free)
+# baidu-tr-free ![Python package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6|3.7%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/baidu-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/baidu-tr-free)
 
 Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 ### Fixed
