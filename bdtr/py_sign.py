@@ -8,13 +8,13 @@ GTK = '320305.131321201'  # for baidu
 # def __getGoogleToken(a, TKK):
 # def get_google_token(a, tkk=TKK):
 # def js_sign(a, tkk=GTK):
-def py_sign(a, tkk=GTK):
+def py_sign(a, tkk=GTK):  # pragma: no cover
     """Calculate Google tk from TKK """
     # https://www.cnblogs.com/chicsky/p/7443830.html
     # if text = 'Tablet Developer' and TKK = '435102.3120524463', then tk = '315066.159012'
 
     def RL(a, b):
-        for d in range(0, len(b)-2, 3):
+        for d in range(0, len(b) - 2, 3):
             c = b[d + 2]
             c = ord(c[0]) - 87 if 'a' <= c else int(c)
             c = a >> c if '+' == b[d + 1] else a << c
@@ -31,7 +31,7 @@ def py_sign(a, tkk=GTK):
             if 2048 > c:
                 g.append((c >> 6) | 192)
             else:
-                if (55296 == (c & 64512)) and (f + 1 < len(a)) and (56320 == (ord(a[f+1]) & 64512)):
+                if (55296 == (c & 64512)) and (f + 1 < len(a)) and (56320 == (ord(a[f + 1]) & 64512)):
                     f += 1
                     c = 65536 + ((c & 1023) << 10) + (ord(a[f]) & 1023)
                     g.append((c >> 18) | 240)
@@ -57,14 +57,14 @@ def py_sign(a, tkk=GTK):
     return str(result) + '.' + str(result ^ h)
 
 
-def test_1():
+def test_1():  # pragma: no cover
     ''' 'Tablet Developer' and TKK = '435102.3120524463', then tk = '315066.159012' '''
     ''
     assert py_sign('Tablet Developer', '435102.3120524463') == '315066.159012'
     assert py_sign('a', '437309.2020832244') == '294880.185309'
     assert py_sign('Tablet Developer', '437309.2020832244') == '537479.958394'
 
-    assert py_sign('a', '406644.3293161072') =='372634.236526'   # used by single/client e.g., google_tr
+    assert py_sign('a', '406644.3293161072') == '372634.236526'  # used by single/client e.g., google_tr
 
 # from googletrans.gtoken import TokenAcquirer
 # ac = TokenAcquirer(tkk='435102.3120524463')

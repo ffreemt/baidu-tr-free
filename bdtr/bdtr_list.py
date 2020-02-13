@@ -1,6 +1,9 @@
 """
 based on youdao_tr_list, no threading, no queue
 """
+
+# pragma: no cover
+
 from pathlib import Path
 import logging
 from time import sleep
@@ -33,7 +36,7 @@ def bdtr_list(seq, from_lang='en', to_lang='zh'):
         bdtr_list.counter = 1
         del exc
 
-    len0 = len(seq)
+    # len0 = len(seq)
 
     # introduce extra delay 0.5 + .5 after 300 calls
     seqout = []

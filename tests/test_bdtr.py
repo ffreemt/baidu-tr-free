@@ -29,6 +29,6 @@ def test_long_test():
     text = 'A second Canadian plane carrying 185 passengers from Wuhan arrived in Vancouver just before 1 a.m. Eastern Time, according to CTV. '
 
     res = bdtr(text)
-    assert len(res) > 10
+    # 据中央电视台报道，第二架载有185名武汉乘客的加拿大飞机于东部时间凌晨1点前抵达温哥华。
+    assert len(res) > 35
     assert res, 'To see res'
-

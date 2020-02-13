@@ -1,3 +1,6 @@
+''' __main__
+'''
+# pragma: no cover
 import sys
 from random import randint
 

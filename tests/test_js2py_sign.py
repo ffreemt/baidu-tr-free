@@ -1,5 +1,6 @@
 from bdtr import js2py_sign
 
+
 def test_sanity():
     ''' sanity check
 

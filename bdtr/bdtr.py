@@ -127,12 +127,12 @@ def make_throttle_hook(timeout=0.67, exempt=1000):
 
     try:
         timeout = float(timeout)
-    except Exception as _:
+    except Exception:
         timeout = .67
 
     try:
         exempt = int(exempt)
-    except Exception as _:
+    except Exception:
         exempt = 100
 
     def hook(response, *args, **kwargs):  # pylint: disable=unused-argument
@@ -177,7 +177,7 @@ def _js_sign(text, gtk='320305.131321201'):
 
     >>> assert _js_sign('test') == '431039.159886'
     '''
-    return PyJs_anonymous_1_(text, gtk).to_py()  # pylint: disable=undefined-variable
+    return PyJs_anonymous_1_(text, gtk).to_py()  # pylint: disable=undefined-variable  # noqa: F821
 
 
 def jp_match(path, obj):
@@ -185,7 +185,7 @@ def jp_match(path, obj):
     return [elm.value for elm in parse(path).find(obj)]
 
 
-def swap(token, bdid, func='bdtr'):
+def swap(token, bdid, func='bdtr'):  # pragma: no cover
     '''
     swap token, id
 
@@ -207,7 +207,8 @@ def swap(token, bdid, func='bdtr'):
         bdtr_.token, bdtr_.id = token, bdid
         bdtr_.headers['Cookie'] = f'BAIDUID={bdtr_.id}'
         bdtr_.sess.get(URL, headers=bdtr_.headers)
-    except Exception as _:
+    # except Exception as _:
+    except Exception:
         # print(_)
         # raise Exception('bdtr must be called at least once before using swap()')
 
@@ -218,7 +219,7 @@ def swap(token, bdid, func='bdtr'):
         bdtr_.sess.get(URL, headers=bdtr_.headers)
 
 
-def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=too-many-branches, too-many-statements
+def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=too-many-branches, too-many-statements  # noqa: C901
     ''' baidu translate based on html token and gtk
 
     from_lang='auto'; to_lang='zh'; cache=False
@@ -251,6 +252,7 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
     try:
         text = str(text).strip()
     except Exception as exc:
+        LOGGER.error('%s', exc)
         text = ''
     if not text:
         return ''
@@ -327,7 +329,7 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
     return ''
 
 
-def main():
+def main():  # pragma: no cover
     """main"""
 
     text = 'When it comes to digital marketing and the ad tech industry, the bright promise of a decentralised future has led to a spate of blockchain initiatives.'  # NOQA

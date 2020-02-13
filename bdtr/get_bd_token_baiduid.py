@@ -42,7 +42,7 @@ def get_bd_token_baiduid():
 # TOKEN_GTK = get_bd_token_gtk()
 try:
     TOKEN, BAIDUID = get_bd_token_baiduid()
-except:
+except Exception:
     TOKEN = '6482f137ca44f07742b2677f5ffd39e1'
     BAIDUID = '19288887A223954909730262637D1DEB:FG=1'
 
