@@ -1,6 +1,10 @@
 # baidu-tr-free ![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/baidu-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/baidu-tr-free)
 
 Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
+
+### Broken or not
+![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg): failing indicates `broken`
+
 ### Fixed
 Text longer than 30 characters can be handled now.
 

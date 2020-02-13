@@ -1,3 +1,5 @@
-requests_cache
-js2py
-jsonpath_rw
+.
+# requests_cache
+# js2py
+# jsonpath_rw
+# tqdm

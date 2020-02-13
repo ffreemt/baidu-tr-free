@@ -32,6 +32,7 @@ setup(
         'requests_cache',
         'js2py',
         'jsonpath_rw',
+        'tqdm',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
