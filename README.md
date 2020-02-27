@@ -21,7 +21,7 @@ pip install -r requirements.txt```
 python setup.py develop```
 
 ### Usage
-Log in to www.baidu.com using Chrome: `bdtr` needs the cookies info (`BAIDUID`) from the Chrome browser on baidu.com.
+Log in to https://passport.baidu.com  using Chrome: `bdtr` needs the cookies info (`BAIDUID`) from the Chrome browser on baidu.com.
 
 ```
 from bdtr import bdtr
