@@ -33,6 +33,7 @@ setup(
         'js2py',
         'jsonpath_rw',
         'tqdm',
+        'httpx',
         'browser-cookie3>=0.10.1',
         'jmespath',
         'pyquery',
