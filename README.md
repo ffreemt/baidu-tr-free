@@ -31,7 +31,6 @@ print(bdtr('hello world', to_lang='jp'))  # ->'ハローワールド'
 ```
 `to_lang='fr'` does not seem to work tho.
 
-
 ### Validation and Pressure Tests
 * pip install pytest
 * pytest
