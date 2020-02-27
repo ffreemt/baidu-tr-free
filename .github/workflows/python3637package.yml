@@ -31,7 +31,8 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest
+        export BDTR_DEBUG=1
+        pytest -k empty
     - name: Build Python package
       run: |
         pip install wheel twine; python setup.py sdist bdist_wheel

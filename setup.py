@@ -33,6 +33,8 @@ setup(
         'js2py',
         'jsonpath_rw',
         'tqdm',
+        'browser-cookie3>=0.10.1',
+        'pyquery',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

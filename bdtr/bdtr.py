@@ -1,4 +1,6 @@
 r'''
+browser-cookie3>=0.10.1: fetc BAIDUID from local browser cookies
+
 2020 02 10: only works if len(text) < 31?
 
 baidu translate using token/gtk from https://fanyi.baidu.com
@@ -7,11 +9,11 @@ TOKEN 和 BAIDUID 从chrome devtools 里拿（Network， 定位 v2transapi，从
 
 或用 selenium （chromedriver）拿TOKEN 和 BAIDUID
 
-但用python requests程序里拿到的token和baiduid则无效，不知道什么原因
 '''
 # pylint: disable=line-too-long
 # , unused-import
 
+import os
 from sys import maxsize
 import logging
 from time import sleep
@@ -21,50 +23,35 @@ from pathlib import Path
 import requests_cache
 
 import js2py
-from jsonpath_rw import parse
+# from jsonpath_rw import parse
+import jmespath
+
+# import pkg_resources
+# if pkg_resources.get_distribution("browser-cookie3").version.split('.') < ['0', '10', '1']:
 
 from .py_sign import py_sign
 from .js2py_sign import js2py_sign
-
-TOKEN = '564da85ec9a69e4f469df84fee8027a7'
-BAIDUID = '2462075953DF51DB4F847392B678BBCA:FG=1'
-
-# works
-TOKEN = '13508e550366f3004701d561721e12bd'
-BAIDUID = 'AFB6E3FB47D3EEA8C525D02E728E0991:FG=1'
-
-# works
-TOKEN = '6482f137ca44f07742b2677f5ffd39e1'
-BAIDUID = '19288887A223954909730262637D1DEB:FG=1'
-
-# copy from devtools
-TOKEN = 'e9ff6a550307ca17c1bc461c07edeaaf'
-BAIDUID = '4EAE417BC9660D50D9A867BC9D7BC0F1:FG=1'
-
-# does not work
-# TOKEN = '9b8bb341109338ba7e875bd9a9dd88ba'
-# from browser_cookie3
-# BAIDUID = '4EAE417BC9660D50D9A867BC9D7BC0F1:FG=1'
-
-BAIDUID = '2462075953DF51DB4F847392B678BBCA:FG=1'
-TOKEN = '564da85ec9a69e4f469df84fee8027a7'
-
-
-BAIDUID = '731394280F578EDE85317AD6C0E13474:FG=1'
-TOKEN = '0c323e96c5788185c6433a66daaae1ec'
-
-TOKEN, BAIDUID = ('9b8bb341109338ba7e875bd9a9dd88ba', '85885D7321AF93211B8F0214B9B1F91E:FG=1')
-
-# TOKEN, BAIDUID = ('b88bd1203769d778996525664a93af85', 'E56024F05E3017023A50047936591306:FG=1')
-# TOKEN, BAIDUID = ('e66e5676d52ce2caa402c996ebd4bcb6', 'A6347D4D2C9E32E287A9D456B36B714C:FG=1')
-# TOKEN, BAIDUID = ('dd7f161198b5c8da969d4175f025d3fa', '7568DBBE0B2C2AFAA4E35DB432B424B0:FG=1')  # OK
-
-# TOKEN, BAIDUID = ('df9b627b81f5d6c41f10be655bdf3887', '85885D7321AF93211B8F0214B9B1F91E:FG=1')  # xOK
+from .get_baiduid_token import get_baiduid_token
 
 # devtools, copy curl(bash)-> requets https://curl.trillworks.com/  OK 2019.11.12
 # pypi-ready\baidu_tr\bdtr\curl2req20191112.py
-TOKEN = 'e9ff6a550307ca17c1bc461c07edeaaf'
-BAIDUID = '4EAE417BC9660D50D9A867BC9D7BC0F1:FG=1'
+# BAIDUID = '4EAE417BC9660D50D9A867BC9D7BC0F1:FG=1'
+# TOKEN = 'e9ff6a550307ca17c1bc461c07edeaaf'
+
+# BAIDUID = '573D03E3F52E7A9006471EEE9059A242:FG=1'
+# TOKEN = 'ce903b4ae5b301e9fbe10e5b8e902191'
+
+BAIDUID, TOKEN = get_baiduid_token()
+
+# BDTR_DEBUG off
+# set/export BDTR_DEBUG=1 to skip check
+if not os.getenv('BDTR_DEBUG'):
+    assert TOKEN, '本程序需要百度的cookies，用 Chrome 浏览器登录百度后再试。'
+
+    assert len(TOKEN) == 32, f'令牌长度[{len(TOKEN)}] 不等于32，令牌可能无效。去 https://github.com/ffreemt/baidu-tr-free/issues 反馈一下。'
+else:
+    if TOKEN is None:
+        TOKEN = ''
 
 # ###########################
 GTK = '320305.131321201'
@@ -180,9 +167,11 @@ def _js_sign(text, gtk='320305.131321201'):
     return PyJs_anonymous_1_(text, gtk).to_py()  # pylint: disable=undefined-variable  # noqa: F821
 
 
+_ = """
 def jp_match(path, obj):
     '''emulate jsonpath_rw_ext\'s jp.match'''
     return [elm.value for elm in parse(path).find(obj)]
+# """
 
 
 def swap(token, bdid, func='bdtr'):  # pragma: no cover
@@ -254,7 +243,7 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
     except Exception as exc:
         LOGGER.error('%s', exc)
         text = ''
-    if not text:
+    if not text:  # pragma: no cover
         return ''
 
     url = 'https://fanyi.baidu.com/v2transapi'
@@ -322,10 +311,15 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
 
     bdtr.json = jdata
 
-    resu = jp_match('$..dst', jdata)
+    # resu = jp_match('$..dst', jdata)
+    # 'trans_result.data[0].dst'
+    # if resu: return resu[0]
+    # return ''
+
+    resu = jmespath.search('trans_result.data[0].dst', jdata)
 
     if resu:
-        return resu[0]
+        return resu
     return ''
 
 

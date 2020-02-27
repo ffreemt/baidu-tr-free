@@ -5,6 +5,14 @@ from random import randint
 from bdtr import bdtr
 
 
+def test_empty():
+    ''' test empty '''
+    text = ' '
+    from_lang = 'wyw'
+    to_lang = 'en'
+    assert bdtr(text, from_lang, to_lang) == ''
+
+
 def test_def():
     ''' test1 '''
     text = '为乐为魂之语与通〜'
