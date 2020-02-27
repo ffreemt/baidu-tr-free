@@ -36,8 +36,8 @@ setup(
         'httpx',
         'browser-cookie3>=0.10.1',
         'jmespath',
-        'pyquery',
         'loguru',
+        'pyquery',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
