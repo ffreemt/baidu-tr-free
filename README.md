@@ -5,11 +5,9 @@ Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 ### Broken or not
 ![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg): failing indicates `broken`. In case of `failing`, try the following workaround: log in to https://passport.baidu.com first. Then use the Chrome browser to visit https://fanyi.baidu.com/v2transapi?from=en&to=zh&query=test, press F12 and then ctr-R (or any method) to open devtools' Network tab and reload. Locate `https://fanyi.baidu.com/v2transapi?from=en&to=zh` and obtain the BAIDUID and token strings in the headers. Plug in the BAIDUID and token strings to lines 66-67 in the bdtr.py file.
 
-### TODO
-Fix auto-fetching BAIDUID and TOKEN
-
 ### Fixed
-Text longer than 30 characters can be handled now.
+* Text longer than 30 characters can be handled now.
+* Auto-fetching BAIDUID and TOKEN
 
 ### Installation
 ```pip install -U baidu-tr-free```
@@ -23,6 +21,7 @@ pip install -r requirements.txt```
 python setup.py develop```
 
 ### Usage
+Log in to www.baidu.com using Chrome: `bdtr` needs the cookies info (`BAIDUID`) from the Chrome browser on baidu.com.
 
 ```
 from bdtr import bdtr
@@ -30,6 +29,8 @@ print(bdtr('hello world'))  # -> '你好，世界'
 print(bdtr('hello world', to_lang='de'))  # ->'Hallo Welt'
 print(bdtr('hello world', to_lang='jp'))  # ->'ハローワールド'
 ```
+`to_lang='fr'` does not seem to work tho.
+
 
 ### Validation and Pressure Tests
 * pip install pytest

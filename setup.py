@@ -34,6 +34,7 @@ setup(
         'jsonpath_rw',
         'tqdm',
         'browser-cookie3>=0.10.1',
+        'jmespath',
         'pyquery',
     ],
     classifiers=[
