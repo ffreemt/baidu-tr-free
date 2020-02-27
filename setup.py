@@ -37,6 +37,7 @@ setup(
         'browser-cookie3>=0.10.1',
         'jmespath',
         'pyquery',
+        'loguru',
     ],
 
     classifiers=[
