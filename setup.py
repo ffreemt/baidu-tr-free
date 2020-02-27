@@ -7,7 +7,7 @@ import re
 
 from setuptools import setup, find_packages
 
-name = """baidu-tr-free"""
+name = 'baidu-tr-free'
 # description = ' '.join(name.split('-'))
 description = name.replace('-tr-', ' translate for ')
 dir_name, = find_packages()
