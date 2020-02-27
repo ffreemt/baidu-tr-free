@@ -3,7 +3,7 @@
 Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 
 ### Broken or not
-![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg): failing indicates `broken`. In case of `failing`, try the following workaround: log in to https://passport.baidu.com first. Then use the Chrome browser to visit https://fanyi.baidu.com/v2transapi?from=en&to=zh&query=test, press F12 and then ctr-R (or any method) to open devtools' Network tab and reload. Locate `https://fanyi.baidu.com/v2transapi?from=en&to=zh` and obtain the BAIDUID and token strings in the headers. Plug in the BAIDUID and token strings to lines 66-67 in the bdtr.py file.
+![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg): failing indicates `broken`. In case of `failing`, try the following workaround: log in to https://passport.baidu.com first. Then use the Chrome browser to visit https://fanyi.baidu.com/v2transapi?from=en&to=zh&query=test, press F12 and then ctr-R (or any method) to open devtools' Network tab and reload. Locate `https://fanyi.baidu.com/v2transapi?from=en&to=zh` and obtain the BAIDUID and token strings in the headers. Plug in the BAIDUID and token strings to lines 66-67 in the  file bdtr.py.
 
 ### Fixed
 * Text longer than 30 characters can be handled now.
