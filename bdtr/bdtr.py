@@ -26,6 +26,9 @@ import js2py
 # from jsonpath_rw import parse
 import jmespath
 
+# from loguru import logger
+from logzero import logger
+
 # import pkg_resources
 # if pkg_resources.get_distribution("browser-cookie3").version.split('.') < ['0', '10', '1']:
 
@@ -41,7 +44,17 @@ from .get_baiduid_token import get_baiduid_token
 # BAIDUID = '573D03E3F52E7A9006471EEE9059A242:FG=1'
 # TOKEN = 'ce903b4ae5b301e9fbe10e5b8e902191'
 
+# 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+# '37a9c9518da5c7feeb4b21d26e957a0a'
+
 BAIDUID, TOKEN = get_baiduid_token()
+# 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+# '9b8bb341109338ba7e875bd9a9dd88ba'  # x
+
+# get_bd_token_baiduid()  # chromedriver based, valid
+token0, baiduid0 = ('d4ff30487b004d0a7197216bd18c6a84', '5929C2F4F3D0DB4F822C3167E1AE8C0B:FG=1')
+
+logger.info('BAIDUID: %s TOKEN: %s', BAIDUID, TOKEN)
 
 # BDTR_DEBUG off
 # set/export BDTR_DEBUG=1 to skip check
@@ -282,6 +295,7 @@ def bdtr(text, from_lang='auto', to_lang='zh', cache=True):  # pylint: disable=t
         # 'sign': js_sign(text, GTK),
         # 'token': bdtr.token,
         'token': TOKEN,
+        # 'token': token,
     }
 
     def fetch():

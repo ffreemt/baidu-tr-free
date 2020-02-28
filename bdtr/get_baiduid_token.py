@@ -8,7 +8,8 @@ from typing import Tuple, Optional
 
 import sys
 import re
-import httpx
+import httpx  # cant seem to get the correct token
+import requests
 import browser_cookie3
 from pyquery import PyQuery as pq
 
@@ -35,6 +36,7 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
 
     try:
         content = httpx.get('http://www.baidu.com', cookies=cj).content
+        # content = requests.get('http://www.baidu.com', cookies=cj).content
     except Exception as exc:
         logger.error(exc)
         content = str(exc).encode()
@@ -47,7 +49,9 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
 
     # fetch token from fanyi.baidu.com
     try:
-        text = httpx.get('http://fanyi.baidu.com', cookies=cj).text
+        # httpx cant seem to get the correct token
+        # text = httpx.get('http://fanyi.baidu.com', cookies=cj).text
+        text = requests.get('http://fanyi.baidu.com', cookies=cj).text
     except Exception as exc:
         logger.error(exc)
         text = str(exc)
@@ -57,3 +61,12 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
         token, = _
 
     return baiduid, token
+
+
+def main():
+    ''' main '''
+    print(get_baiduid_token())
+
+
+if __name__ == '__main__':
+    main()
