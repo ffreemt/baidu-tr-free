@@ -14,11 +14,14 @@ TOKEN 和 BAIDUID 从chrome devtools 里拿（Network， 定位 v2transapi，从
 # , unused-import
 
 import os
-from sys import maxsize
+from sys import maxsize, exit
 import logging
 from time import sleep
 from random import random, randint
 from pathlib import Path
+
+import socket
+socket.setdefaulttimeout(30)
 
 import requests_cache
 
@@ -45,23 +48,33 @@ from .get_baiduid_token import get_baiduid_token
 # TOKEN = 'ce903b4ae5b301e9fbe10e5b8e902191'
 
 # 'BF565E9628E0A53ED07B135111920C1B:FG=1'
-# '37a9c9518da5c7feeb4b21d26e957a0a'
 
 BAIDUID, TOKEN = get_baiduid_token()
 # 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+# '37a9c9518da5c7feeb4b21d26e957a0a'  # v
 # '9b8bb341109338ba7e875bd9a9dd88ba'  # x
 
-# get_bd_token_baiduid()  # chromedriver based, valid
-token0, baiduid0 = ('d4ff30487b004d0a7197216bd18c6a84', '5929C2F4F3D0DB4F822C3167E1AE8C0B:FG=1')
+# fall back
+if not (BAIDUID and TOKEN):
+    BAIDUID = 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+    TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
 
-# logger.info('BAIDUID: %s TOKEN: %s', BAIDUID, TOKEN)
+# plan B
+# get_bd_token_baiduid()  # chromedriver based, valid
+TOKEN0, BAIDUID0 = ('d4ff30487b004d0a7197216bd18c6a84', '5929C2F4F3D0DB4F822C3167E1AE8C0B:FG=1')
+# BAIDUID, TOKEN = baiduid0, token0
+
+# print('BAIDUID: %s TOKEN: %s' % (BAIDUID, TOKEN))
 
 # BDTR_DEBUG off
 # set/export BDTR_DEBUG=1 to skip check
 if not os.getenv('BDTR_DEBUG'):
-    assert TOKEN, '本程序需要百度的cookies，用 Chrome 浏览器登录百度后再试。'
+    assert TOKEN, r'''
+    bdtr needs Baidu cookies from Chrome -- Login to passport.baidu.com first and then try again.
+    本程序需要百度的cookies，用 Chrome 浏览器登录百度后再试。
+    '''
 
-    assert len(TOKEN) == 32, f'令牌长度[{len(TOKEN)}] 不等于32，令牌可能无效。去 https://github.com/ffreemt/baidu-tr-free/issues 反馈一下。'
+    assert len(TOKEN) == 32, fr'令牌长度[{len(TOKEN)}] 不等于32，令牌可能无效。去 https://github.com/ffreemt/baidu-tr-free/issues 反馈一下。'
 else:
     if TOKEN is None:
         TOKEN = ''
@@ -353,4 +366,4 @@ def main():  # pragma: no cover
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())

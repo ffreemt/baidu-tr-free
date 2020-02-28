@@ -14,6 +14,8 @@ import browser_cookie3
 from pyquery import PyQuery as pq
 
 from loguru import logger
+import socket
+socket.setdefaulttimeout(90)
 
 
 def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
@@ -24,18 +26,28 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
     '''
 
     if sys.platform not in ['win32']:
-        logger.warning('Only wroks in Windows, sorry')
+        logger.warning('Only tested in Windows, Linux/OSx may not work')
         # for github flow only
         # to pass the export BDTR_DEBUG=1 && 'pytest -k empty' test
-        return '', None
+        # return '', None
 
     logged_in = []
-    cj = browser_cookie3.chrome(domain_name='baidu.com')
+    try:
+        cj = browser_cookie3.chrome(domain_name='baidu.com')
+    except Exception as exc:
+        logger.error('unable to get cookies: %s, exiting...' % exc)
+        return '', None
 
-    baiduid = dict([(cookie.name, cookie.value) for cookie in cj]).get('BAIDUID')
+    cj_dict = dict([(elm.name, elm.value) for elm in cj if elm.name in ['BAIDUID', 'BDUSS']])
+
+    baiduid = cj_dict.get('BAIDUID')
+    # sess = httpx.Client()
+    sess = requests.Session()
+    # sess.get('http://www.baidu.com', cookies=cj)
 
     try:
-        content = httpx.get('http://www.baidu.com', cookies=cj).content
+        content = sess.get('http://www.baidu.com', cookies=cj_dict).content
+        # content = httpx.get('http://www.baidu.com',  cookies=cj).content
         # content = requests.get('http://www.baidu.com', cookies=cj).content
     except Exception as exc:
         logger.error(exc)
@@ -51,7 +63,10 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
     try:
         # httpx cant seem to get the correct token
         # text = httpx.get('http://fanyi.baidu.com', cookies=cj).text
-        text = requests.get('http://fanyi.baidu.com', cookies=cj).text
+        # text = requests.get('http://fanyi.baidu.com', cookies=cj).text
+        _ = 'https://fanyi.baidu.com'
+        text = sess.get(_, cookies=cj_dict).text
+        # text = sess.get(_, cookies=cj_dict).text
     except Exception as exc:
         logger.error(exc)
         text = str(exc)
@@ -59,6 +74,8 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
     token = ''
     if _:
         token, = _
+
+    sess.close()
 
     return baiduid, token
 
