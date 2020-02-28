@@ -49,15 +49,15 @@ from .get_baiduid_token import get_baiduid_token
 
 # 'BF565E9628E0A53ED07B135111920C1B:FG=1'
 
-BAIDUID, TOKEN = get_baiduid_token()
+# BAIDUID, TOKEN = get_baiduid_token()
 # 'BF565E9628E0A53ED07B135111920C1B:FG=1'
 # '37a9c9518da5c7feeb4b21d26e957a0a'  # v
 # '9b8bb341109338ba7e875bd9a9dd88ba'  # x
 
 # fall back
-if not (BAIDUID and TOKEN):
-    BAIDUID = 'BF565E9628E0A53ED07B135111920C1B:FG=1'
-    TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
+# if not (BAIDUID and TOKEN):
+BAIDUID = 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
 
 # plan B
 # get_bd_token_baiduid()  # chromedriver based, valid
