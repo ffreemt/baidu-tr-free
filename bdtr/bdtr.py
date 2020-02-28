@@ -27,7 +27,7 @@ import js2py
 import jmespath
 
 # from loguru import logger
-from logzero import logger
+# from logzero import logger
 
 # import pkg_resources
 # if pkg_resources.get_distribution("browser-cookie3").version.split('.') < ['0', '10', '1']:
@@ -54,7 +54,7 @@ BAIDUID, TOKEN = get_baiduid_token()
 # get_bd_token_baiduid()  # chromedriver based, valid
 token0, baiduid0 = ('d4ff30487b004d0a7197216bd18c6a84', '5929C2F4F3D0DB4F822C3167E1AE8C0B:FG=1')
 
-logger.info('BAIDUID: %s TOKEN: %s', BAIDUID, TOKEN)
+# logger.info('BAIDUID: %s TOKEN: %s', BAIDUID, TOKEN)
 
 # BDTR_DEBUG off
 # set/export BDTR_DEBUG=1 to skip check
