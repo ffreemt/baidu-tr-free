@@ -19,6 +19,7 @@ import logging
 from time import sleep
 from random import random, randint
 from pathlib import Path
+from loguru import logger
 
 import socket
 socket.setdefaulttimeout(30)
@@ -58,6 +59,10 @@ from .get_baiduid_token import get_baiduid_token
 if platform in ['win32']:
     BAIDUID, BDUSS, TOKEN = get_baiduid_token()
 else:
+    logger.warning(r'''
+    Not yet tested in linux/osx
+    It probably wont work.
+    ''')
     BAIDUID = 'BF565E9628E0A53ED07B135111920C1B:FG=1'
     BDUSS = 'ktBWnRiflNtOUxrU3EwVlhIekFpa2FWYlZpZXF4cjZ3Z1pVQjE5cXFlelNxQTVlRVFBQUFBJCQAAAAAAAAAAAEAAAAtdmArbWlrZTAxMDEwMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIb513SG-dda'
     TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
