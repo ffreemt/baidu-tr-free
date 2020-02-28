@@ -34,6 +34,7 @@ setup(
         'jsonpath_rw',
         'tqdm',
         'httpx',
+        'requests',
         'browser-cookie3>=0.10.1',
         'jmespath',
         'loguru',
