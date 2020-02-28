@@ -1,4 +1,4 @@
-# baidu-tr-free ![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg)[![PyPI version](https://badge.fury.io/py/baidu-tr-free.svg)](https://badge.fury.io/py/baidu-tr-free)
+# baidu-tr-free ![Python3.6 package](https://github.com/ffreemt/baidu-tr-free/workflows/Python3.6%20package/badge.svg)![Codecov](https://github.com/ffreemt/baidu-tr-free/workflows/Codecov/badge.svg)[![PyPI version](https://badge.fury.io/py/baidu-tr-free.svg)](https://badge.fury.io/py/baidu-tr-free)
 
 Baidu translate for free -- local cache plus throttling. Let's hope it lasts.
 
