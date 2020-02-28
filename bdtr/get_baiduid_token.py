@@ -41,6 +41,7 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
     cj_dict = dict([(elm.name, elm.value) for elm in cj if elm.name in ['BAIDUID', 'BDUSS']])
 
     baiduid = cj_dict.get('BAIDUID')
+    bduss = cj_dict.get('BDUSS')
     # sess = httpx.Client()
     sess = requests.Session()
     # sess.get('http://www.baidu.com', cookies=cj)
@@ -77,7 +78,7 @@ def get_baiduid_token() -> Tuple[Optional[str], Optional[str]]:
 
     sess.close()
 
-    return baiduid, token
+    return baiduid, bduss, token
 
 
 def main():

@@ -14,7 +14,7 @@ TOKEN 和 BAIDUID 从chrome devtools 里拿（Network， 定位 v2transapi，从
 # , unused-import
 
 import os
-from sys import maxsize, exit
+from sys import maxsize, exit, platform
 import logging
 from time import sleep
 from random import random, randint
@@ -49,15 +49,19 @@ from .get_baiduid_token import get_baiduid_token
 
 # 'BF565E9628E0A53ED07B135111920C1B:FG=1'
 
-# BAIDUID, TOKEN = get_baiduid_token()
 # 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+# 'ktBWnRiflNtOUxrU3EwVlhIekFpa2FWYlZpZXF4cjZ3Z1pVQjE5cXFlelNxQTVlRVFBQUFBJCQAAAAAAAAAAAEAAAAtdmArbWlrZTAxMDEwMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIb513SG-dda'
 # '37a9c9518da5c7feeb4b21d26e957a0a'  # v
 # '9b8bb341109338ba7e875bd9a9dd88ba'  # x
 
 # fall back
-# if not (BAIDUID and TOKEN):
-BAIDUID = 'BF565E9628E0A53ED07B135111920C1B:FG=1'
-TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
+if platform in ['win32']:
+    BAIDUID, BDUSS, TOKEN = get_baiduid_token()
+else:
+    BAIDUID = 'BF565E9628E0A53ED07B135111920C1B:FG=1'
+    BDUSS = 'ktBWnRiflNtOUxrU3EwVlhIekFpa2FWYlZpZXF4cjZ3Z1pVQjE5cXFlelNxQTVlRVFBQUFBJCQAAAAAAAAAAAEAAAAtdmArbWlrZTAxMDEwMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIb513SG-dda'
+    TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
+
 
 # plan B
 # get_bd_token_baiduid()  # chromedriver based, valid
@@ -116,7 +120,7 @@ var hash = function (r, _gtk) {
 }'''
 
 HEADERS = {
-    'Cookie': f'BAIDUID={BAIDUID}',
+    'Cookie': f'BAIDUID={BAIDUID}; BDUSS={BDUSS}',
     'Host': 'fanyi.baidu.com',
     'Origin': 'https://fanyi.baidu.com',
     'Referer': 'https://fanyi.baidu.com/',
