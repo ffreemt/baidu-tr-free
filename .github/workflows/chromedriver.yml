@@ -42,4 +42,5 @@ jobs:
     - name: Run pytest -k chromedriver
       run: |
         export BDTR_DEBUG=1
+        pip install chromedriver_autoinstaller
         pytest -k chromedriver
