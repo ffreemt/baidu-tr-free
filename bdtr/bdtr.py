@@ -67,6 +67,8 @@ else:
     BDUSS = 'ktBWnRiflNtOUxrU3EwVlhIekFpa2FWYlZpZXF4cjZ3Z1pVQjE5cXFlelNxQTVlRVFBQUFBJCQAAAAAAAAAAAEAAAAtdmArbWlrZTAxMDEwMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIb513SG-dda'
     TOKEN = '37a9c9518da5c7feeb4b21d26e957a0a'
 
+# chrome devtools
+# BDUSS=ktBWnRiflNtOUxrU3EwVlhIekFpa2FWYlZpZXF4cjZ3Z1pVQjE5cXFlelNxQTVlRVFBQUFBJCQAAAAAAAAAAAEAAAAtdmArbWlrZTAxMDEwMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIb513SG-dda; BAIDUID=BF565E9628E0A53ED07B135111920C1B:FG=1
 
 # plan B
 # get_bd_token_baiduid()  # chromedriver based, valid
@@ -125,12 +127,12 @@ var hash = function (r, _gtk) {
 }'''
 
 HEADERS = {
-    'Cookie': f'BAIDUID={BAIDUID}; BDUSS={BDUSS}',
+    'Cookie': f'BDUSS={BDUSS}; BAIDUID={BAIDUID}',
     'Host': 'fanyi.baidu.com',
     'Origin': 'https://fanyi.baidu.com',
     'Referer': 'https://fanyi.baidu.com/',
     'User-Agent': UA,
-    'X-Requested-With': 'XMLHttpRequest'
+    # 'X-Requested-With': 'XMLHttpRequest'
 }
 
 # GTK = '320305.131321201'
