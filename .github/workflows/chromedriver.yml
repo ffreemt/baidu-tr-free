@@ -6,9 +6,20 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6]
 
     steps:
-    - uses: actions/checkout@master  # https://github.com/marketplace/actions/setup-chromedriver
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+    # steps:
+    #- uses: actions/checkout@master  # https://github.com/marketplace/actions/setup-chromedriver
     - uses: nanasess/setup-chromedriver@master
     - name: Run a one-line script
       run: echo Hello, world!
