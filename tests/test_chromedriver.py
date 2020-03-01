@@ -1,7 +1,7 @@
 ''' test_chromedriver chromedriver_autoinstaller '''
 from selenium import webdriver
-import chromedriver_autoinstaller
-chromedriver_autoinstaller.install()
+# import chromedriver_autoinstaller
+# chromedriver_autoinstaller.install()
 from selenium.webdriver.chrome.options import Options
 
 
