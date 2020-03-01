@@ -39,6 +39,7 @@ setup(
         'jmespath',
         'loguru',
         'pyquery',
+        'selenium',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
