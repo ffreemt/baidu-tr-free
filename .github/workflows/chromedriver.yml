@@ -17,8 +17,6 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-    # steps:
     #- uses: actions/checkout@master  # https://github.com/marketplace/actions/setup-chromedriver
     - uses: nanasess/setup-chromedriver@master
     - name: Run a one-line script
