@@ -12,13 +12,16 @@ jobs:
     - uses: nanasess/setup-chromedriver@master
     - name: Run a one-line script
       run: echo Hello, world!
-    - name: Run a multi-line script
+    # - name: Run a multi-line script
+    - name: Run which chromedriver
       # with:
       # Optional: do not specify to match Chrome's version
       # chromedriver-version: '77.0.3865.40'
       run: |
         echo check chromedriver
         which chromedriver
+    - name: Run pytest -k chromedriver
+      run: |
         python -m pip install --upgrade pip
         pip install selenium
         pip install pytest
