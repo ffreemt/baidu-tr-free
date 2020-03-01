@@ -1,0 +1,25 @@
+name: chromedriver
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master  # https://github.com/marketplace/actions/setup-chromedriver
+    - uses: nanasess/setup-chromedriver@master
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Run a multi-line script
+      # with:
+      # Optional: do not specify to match Chrome's version
+      # chromedriver-version: '77.0.3865.40'
+      run: |
+        echo check chromedriver
+        which chromedriver
+        python -m pip install --upgrade pip
+        pip3 install selenium pytest
+        export BDTR_DEBUG=1
+        pytest -k chromedriver
